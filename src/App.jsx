@@ -8,7 +8,7 @@ import ScribesSanctuary from "./components/ScribesSanctuary";
 import { ScrollReveal } from "./hooks/useScrollReveal";
 
 function TypewriterSubtitle() {
-  const words = ["Software Engineer",  "AI/ML Engineer","Systems Builder", "Backend Developer"];
+  const words = ["Software Engineer", "AI/ML Engineer", "Systems Builder", "Backend Developer"];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -44,10 +44,10 @@ function TypewriterSubtitle() {
   }, [currentText, isDeleting, currentWordIndex, typingSpeed]);
 
   return (
-    <span 
-      className="font-mono text-sm block typewriter-cursor" 
-      style={{ 
-        color: "var(--color-saffron)", 
+    <span
+      className="font-mono text-sm block typewriter-cursor"
+      style={{
+        color: "var(--color-saffron)",
         fontWeight: "600",
         letterSpacing: "0.08em",
         borderRight: "2px solid var(--color-saffron)",
@@ -78,10 +78,10 @@ function HomeSanskritQuote() {
   useEffect(() => {
     if (!textRevealed) return;
     if (quoteIndex >= quote.length) return;
-    
+
     // Simulate natural human/mechanical typewriter pacing variation (55ms - 125ms)
     const randomDelay = 55 + Math.random() * 70;
-    
+
     const timer = setTimeout(() => {
       setQuoteIndex((i) => i + 1);
     }, randomDelay);
@@ -89,7 +89,7 @@ function HomeSanskritQuote() {
   }, [textRevealed, quoteIndex]);
 
   return (
-    <div 
+    <div
       className="max-w-xl mx-auto mb-10 text-center relative"
       style={{
         padding: "1.2rem 2rem",
@@ -99,7 +99,7 @@ function HomeSanskritQuote() {
       }}
     >
       {/* Small glowing OM symbol badge in the center top */}
-      <div 
+      <div
         className="absolute left-1/2 -top-3.5 flex items-center justify-center font-bold"
         style={{
           width: "26px",
@@ -116,10 +116,10 @@ function HomeSanskritQuote() {
         🕉
       </div>
 
-      <p 
-        className="text-base md:text-xl leading-relaxed font-semibold block" 
-        style={{ 
-          color: "var(--color-text-primary)", 
+      <p
+        className="text-base md:text-xl leading-relaxed font-semibold block"
+        style={{
+          color: "var(--color-text-primary)",
           fontFamily: "var(--font-classic)",
           minHeight: "1.5em",
           letterSpacing: "0.06em"
@@ -130,9 +130,9 @@ function HomeSanskritQuote() {
           {quote.slice(0, quoteIndex)}
         </span>
         {quoteIndex < quote.length && (
-          <span 
-            className="typewriter-cursor" 
-            style={{ 
+          <span
+            className="typewriter-cursor"
+            style={{
               display: "inline-block",
               width: "3px",
               height: "1.15em",
@@ -145,10 +145,10 @@ function HomeSanskritQuote() {
         )}
         &rdquo;
       </p>
-      <p 
-        className="text-xs md:text-sm mt-2.5 transition-all duration-1000" 
-        style={{ 
-          color: "var(--color-saffron)", 
+      <p
+        className="text-xs md:text-sm mt-2.5 transition-all duration-1000"
+        style={{
+          color: "var(--color-saffron)",
           opacity: quoteIndex >= quote.length ? 0.9 : 0,
           fontFamily: "var(--font-classic)",
           letterSpacing: "0.08em"
@@ -429,7 +429,7 @@ export default function App() {
               <HomeSanskritQuote />
             </ScrollReveal>
 
-            {/* CTAs — Projects + Resume */}
+            {/* CTAs — Projects + Resume
             <ScrollReveal delay={550}>
               <div className="flex gap-4 items-center justify-center flex-wrap mb-8">
                 <a href="#projects" className="btn-primary text-sm">
@@ -444,9 +444,9 @@ export default function App() {
                   <Download className="w-4 h-4" /> DOWNLOAD RESUME
                 </a>
               </div>
-            </ScrollReveal>
+            </ScrollReveal> */}
 
-            {/* Social Links */}
+            {/* Social Links
             <ScrollReveal delay={650}>
               <div className="social-links mb-12">
                 <a href="https://github.com/harsh-raj00" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="GitHub">
@@ -459,7 +459,7 @@ export default function App() {
                   <Mail className="w-5 h-5" />
                 </a>
               </div>
-            </ScrollReveal>
+            </ScrollReveal> */}
 
 
           </div>
@@ -501,7 +501,7 @@ export default function App() {
                     className="text-marcellus text-base md:text-lg mb-6 font-light"
                     style={{ color: "var(--color-text-primary)", lineHeight: "1.8" }}
                   >
-                     I am a Data Science student & Artificial Intelligence student passionate about building intelligent, scalable, and production-grade software systems that solve meaningful real-world problems. My work lies at the intersection of software engineering, machine learning, and modern system design, where I focus on transforming complex ideas into reliable, high-performance, and impactful digital products.
+                    I am a Data Science student & Artificial Intelligence student passionate about building intelligent, scalable, and production-grade software systems that solve meaningful real-world problems. My work lies at the intersection of software engineering, machine learning, and modern system design, where I focus on transforming complex ideas into reliable, high-performance, and impactful digital products.
                   </p>
                   <p
                     className="text-marcellus text-sm md:text-base mb-6"
@@ -565,7 +565,7 @@ export default function App() {
             <p className="text-xs mb-4" style={{ color: "var(--color-text-secondary)", letterSpacing: "0.05em" }}>
               "तपः स्वाध्याय ईश्वरप्रणिधानानि क्रियायोगः" — Austerity, study, and surrender constitute active yoga.
             </p>
-           
+
 
             {/* Footer Social Links */}
             <div className="social-links mb-6" style={{ justifyContent: "center" }}>

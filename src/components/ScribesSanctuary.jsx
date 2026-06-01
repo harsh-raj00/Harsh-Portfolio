@@ -49,7 +49,7 @@ export default function ScribesSanctuary() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          access_key: "YOUR_WEB3FORMS_ACCESS_KEY", // TODO: Replace with your Web3Forms access key from https://web3forms.com
+          access_key: import.meta.env.VITE_WEB3FORMS_KEY || "33eaac11-da30-455e-b651-112c21938f23", // Failsafe: supports both Vercel/Netlify Environment Variables (VITE_WEB3FORMS_KEY) or manual override in the code
           name: form.name,
           email: form.email,
           message: form.message,
@@ -145,7 +145,7 @@ export default function ScribesSanctuary() {
                 className="text-xs font-bold uppercase text-cinzel block"
                 style={{ color: "var(--color-saffron)", letterSpacing: "0.15em" }}
               >
-                 Connect With Me
+                Connect With Me
               </span>
               <h3 className="text-cinzel text-2xl md:text-3xl font-bold leading-tight" style={{ color: "var(--color-text-primary)" }}>
                 Let's Build <br />Something <span className="gold-glow-text">Amazing</span>
@@ -203,7 +203,7 @@ export default function ScribesSanctuary() {
               style={{ borderTop: "1px solid rgba(205,162,80,0.1)", paddingTop: "1.5rem", marginTop: "1rem" }}
             >
               <span className="font-mono text-xs" style={{ color: "var(--color-text-secondary)", opacity: 0.5 }}>
-                "Stay curious. Keep building." 
+                "Stay curious. Keep building."
               </span>
             </div>
           </ScrollReveal>
@@ -221,7 +221,7 @@ export default function ScribesSanctuary() {
                   SEND A MESSAGE
                 </span>
                 <span className="font-mono text-xs" style={{ color: "var(--color-text-secondary)", opacity: 0.4 }}>
-                 
+
                 </span>
               </div>
 
