@@ -182,7 +182,7 @@ export default function LotusMandala() {
                     transition: "transform 1s cubic-bezier(0.16, 1, 0.3, 1)"
                   }}
                 >
-                  <span className="animate-heartbeat" style={{ color: "var(--color-gold-glow)", fontSize: "1.1rem" }}>🕉</span>
+                  <Sparkles className="w-5 h-5 animate-pulse-gentle" style={{ color: "var(--color-gold-glow)" }} />
                 </div>
 
                 {/* 4 Rotating Petals */}
@@ -402,7 +402,7 @@ export default function LotusMandala() {
 
               {/* Dynamic Circular Floating Area Inside Card (6 Skills arranged in a beautiful mandala) */}
               <div className="floating-area">
-                {/* Centered OM Symbol in the middle of the skills circle */}
+                {/* Centered Core in the middle of the skills circle */}
                 <div
                   className="absolute flex items-center justify-center animate-glow-breathe"
                   style={{
@@ -416,7 +416,7 @@ export default function LotusMandala() {
                     top: "calc(50% - var(--bindu-half))",
                   }}
                 >
-                  <span className="animate-heartbeat" style={{ color: "var(--color-gold-glow)", fontSize: "0.95rem" }}>🕉</span>
+                  <Sparkles className="w-4 h-4 animate-pulse-gentle" style={{ color: "var(--color-gold-glow)" }} />
                 </div>
 
                 {/* Staggered Circular Skills Orbs */}
@@ -446,13 +446,6 @@ export default function LotusMandala() {
                   );
                 })}
               </div>
-
-              {/* Footnote text */}
-              {/* <div className="text-center mt-6">
-                <p className="text-xs" style={{ color: "var(--color-text-secondary)", fontStyle: "italic", opacity: 0.8 }}>
-                  ॐ fields of knowledge floating gracefully in cosmic symmetry.
-                </p>
-              </div> */}
             </div>
           </ScrollReveal>
         </div>

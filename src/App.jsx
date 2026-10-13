@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Moon, Sun, Menu, X, ArrowUp, Compass, Mail, Download } from "lucide-react";
+import { Moon, Sun, Menu, X, ArrowUp, Compass, Mail, Download, Sparkles } from "lucide-react";
 import { GithubIcon, LinkedinIcon, TwitterIcon } from "./components/SocialIcons";
 import CosmicBackground from "./components/CosmicBackground";
 import LotusMandala from "./components/LotusMandala";
@@ -98,7 +98,7 @@ function HomeSanskritQuote() {
         borderBottom: "1px solid rgba(205, 162, 80, 0.12)",
       }}
     >
-      {/* Small glowing OM symbol badge in the center top */}
+      {/* Small glowing badge in the center top */}
       <div
         className="absolute left-1/2 -top-3.5 flex items-center justify-center font-bold"
         style={{
@@ -108,12 +108,11 @@ function HomeSanskritQuote() {
           border: "1px solid rgba(205, 162, 80, 0.25)",
           background: "var(--bg-primary)",
           color: "var(--color-gold-glow)",
-          fontSize: "0.8rem",
           transform: "translateX(-50%)",
           boxShadow: "0 0 10px rgba(224, 90, 16, 0.25)"
         }}
       >
-        🕉
+        <Sparkles className="w-3.5 h-3.5" style={{ color: "var(--color-gold-glow)" }} />
       </div>
 
       <p
@@ -385,20 +384,6 @@ export default function App() {
         <div id="home" className="min-h-screen flex items-center relative" style={{ overflow: "hidden", paddingTop: "6rem" }}>
           <div className="sacred-grid" />
           <div className="container relative z-10 py-16 text-center">
-            {/* Small sacred badge */}
-            <ScrollReveal delay={0}>
-              <span
-                className="text-cinzel text-sm md:text-base font-bold tracking-widest block mb-6 animate-pulse-gentle"
-                style={{
-                  color: "var(--color-saffron)",
-                  letterSpacing: "0.25em",
-                  opacity: 0.85
-                }}
-              >
-                ॐ नमः शिवाय
-              </span>
-            </ScrollReveal>
-
             {/* PRIMARY: Name — the biggest thing on screen */}
             <ScrollReveal delay={100}>
               <h1 className="text-cinzel text-5xl md:text-7xl font-bold tracking-wider mb-3" style={{ lineHeight: "1.05" }}>

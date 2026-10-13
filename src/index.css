@@ -689,20 +689,18 @@ body::before {
 }
 
 .timeline-pillar::before {
-  content: "🕉";
+  content: "";
   position: absolute;
   left: -48px;
   top: 4px;
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: var(--bg-secondary);
+  background: radial-gradient(circle, var(--color-gold-glow) 28%, var(--bg-secondary) 35%);
   border: 2px solid var(--color-sandstone);
-  color: var(--color-sandstone);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
   box-shadow: 0 0 15px rgba(205, 162, 80, 0.3);
   z-index: 2;
   transition: var(--transition-smooth);
