@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ExternalLink, BookOpen, Shield, BookMarked, Brain, Globe, Lock, Zap, Home } from "lucide-react";
+import { ExternalLink, BookOpen, Shield, BookMarked, Brain, Globe, Lock, Zap, Home, ChefHat } from "lucide-react";
 import { GithubIcon } from "./SocialIcons";
 import { ScrollReveal } from "../hooks/useScrollReveal";
 
@@ -9,6 +9,19 @@ export default function ProjectManuscripts() {
   const projects = [
     {
       id: 1,
+      title: "ChefMind AI",
+      category: "Multimodal AI / Full-Stack",
+      description: "An intelligent culinary platform that turns pantry odds and ends into gourmet recipes via multimodal vision, speech recognition, and a resilient dual-engine AI cascade.",
+      specs: "Dual-Engine AI architecture pairing Groq Cloud (openai/gpt-oss-120b @ 500 t/s) with Google Gemini Flash failover. Features Gemini Vision multimodal pantry detection, Web Speech API voice dictation, zero-latency serving scaler with culinary math & spice dampening, in-context AI sous-chef chat, and authentic English & Hindi (हिन्दी) Devanagari recipe generation. Node.js + Express 5 + MongoDB Atlas.",
+      tech: ["React 19", "Node.js", "Express.js", "MongoDB", "Gemini API", "Groq"],
+      links: { live: "https://chef-mind-ai.vercel.app", github: "https://github.com/harsh-raj00/ChefMind-AI" },
+      sanskrit: "पाककला मति (ChefMind AI)",
+      icon: <ChefHat className="w-5 h-5" style={{ color: "var(--color-saffron)" }} />,
+      gradient: "var(--proj-gradient-6)",
+      accentColor: "#ff7844"
+    },
+    {
+      id: 2,
       title: "BookBridge",
       category: "Full-Stack Platform",
       description: "A full-stack marketplace where college students buy & sell academic textbooks and share study resources — notes, PDFs, assignments, question papers — all in one hub.",
@@ -21,7 +34,7 @@ export default function ProjectManuscripts() {
       accentColor: "#e05a10"
     },
     {
-      id: 2,
+      id: 3,
       title: "LivspaceOne",
       category: "E-Commerce / Architecture",
       description: "India's premier digital storefront for sophisticated space creation — connecting luxury homeowners with elite certified contractors, architects, and design experts.",
@@ -34,7 +47,7 @@ export default function ProjectManuscripts() {
       accentColor: "#4a9e6e"
     },
     {
-      id: 3,
+      id: 4,
       title: "J.A.R.V.I.S.",
       category: "AI / Full-Stack",
       description: "An AI-powered personal assistant with a cinematic Iron Man holographic interface. Features real-time 3D holographic sphere with 8,000 particles, voice control, and smart home integration.",
@@ -47,7 +60,7 @@ export default function ProjectManuscripts() {
       accentColor: "#4da6ff",
     },
     {
-      id: 4,
+      id: 5,
       title: "EthSecure Health",
       category: "Blockchain / Web3",
       description: "A patient-centric Ethereum blockchain system for secure electronic health records using IPFS decentralized storage, client-side AES-256 encryption, and role-based smart contracts.",
@@ -60,7 +73,7 @@ export default function ProjectManuscripts() {
       accentColor: "#b87333"
     },
     {
-      id: 5,
+      id: 6,
       title: "DeepfakeGuard",
       category: "AI / Computer Vision",
       description: "Multi-layered biometric authentication combining real-time face detection, recognition, liveness verification, and AI-powered deepfake detection to protect identity against spoofing attacks.",
@@ -115,25 +128,13 @@ export default function ProjectManuscripts() {
           </div>
         </ScrollReveal>
 
-        {/* Project cards — top row of 3, bottom row of 2 centered */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8" style={{ marginBottom: "2rem" }}>
-          {projects.slice(0, 3).map((proj, index) => (
+        {/* Project cards — 3 columns responsive grid (2 rows of 3) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {projects.map((proj, index) => (
             <ProjectCard
               key={proj.id}
               proj={proj}
               index={index}
-              isOpen={activeProject === proj.id}
-              onToggle={() => setActiveProject(activeProject === proj.id ? null : proj.id)}
-              onMouseMove={handleMouseMove}
-            />
-          ))}
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8" style={{ maxWidth: "820px", margin: "0 auto" }}>
-          {projects.slice(3).map((proj, index) => (
-            <ProjectCard
-              key={proj.id}
-              proj={proj}
-              index={index + 3}
               isOpen={activeProject === proj.id}
               onToggle={() => setActiveProject(activeProject === proj.id ? null : proj.id)}
               onMouseMove={handleMouseMove}
@@ -253,7 +254,7 @@ function ProjectCard({ proj, index, isOpen, onToggle, onMouseMove }) {
               style={{ borderTop: "1px solid rgba(205,162,80,0.12)", paddingTop: "1rem" }}
             >
               <span className="font-mono text-xs" style={{ color: "var(--color-text-secondary)", opacity: 0.5 }}>
-                LEAF #{proj.id} OF V
+                LEAF #{proj.id} OF VI
               </span>
               <span
                 className="text-xs font-bold text-cinzel flex items-center gap-2"

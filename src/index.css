@@ -64,6 +64,7 @@
   --proj-gradient-3: linear-gradient(145deg, #0f1518 0%, #0a0d10 100%);
   --proj-gradient-4: linear-gradient(145deg, #12100a 0%, #0d0a06 100%);
   --proj-gradient-5: linear-gradient(145deg, #0e1210 0%, #0a0e0c 100%);
+  --proj-gradient-6: linear-gradient(145deg, #180f0a 0%, #0f0a06 100%);
 
   /* Biography card custom properties */
   --biography-card-bg: rgba(23, 17, 12, 0.45);
@@ -142,6 +143,7 @@
   --proj-gradient-3: linear-gradient(145deg, #FFFFFF 0%, #F2EDE5 100%);
   --proj-gradient-4: linear-gradient(145deg, #FEFCF6 0%, #F5EDE0 100%);
   --proj-gradient-5: linear-gradient(145deg, #FFFFFF 0%, #F0EDE5 100%);
+  --proj-gradient-6: linear-gradient(145deg, #FFFDF8 0%, #F8EFE4 100%);
 
   /* Biography card custom properties — Light mode overrides */
   --biography-card-bg: rgba(255, 255, 255, 0.55);
