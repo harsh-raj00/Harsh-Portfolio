@@ -78,10 +78,10 @@ export default function LotusMandala() {
   ];
 
   return (
-    <section 
-      ref={sectionRef} 
-      id="knowledge" 
-      className="py-24 relative" 
+    <section
+      ref={sectionRef}
+      id="knowledge"
+      className="py-24 relative"
       style={{ overflow: "hidden", backgroundColor: "var(--bg-primary)" }}
     >
       {/* Background radial glow */}
@@ -120,136 +120,100 @@ export default function LotusMandala() {
         </ScrollReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Interactive Lotus Mandala */}
+          {/* Left Column: Vertical Line-by-Line List */}
           <ScrollReveal animation="reveal-slide-left" className="lg:col-span-6">
-            <div
-              className="flex justify-center items-center relative"
-              style={{ aspectRatio: "1/1", maxWidth: "420px", margin: "0 auto", width: "100%" }}
-            >
-              {/* Outer Sanskrit Ring */}
-              <div
-                className="absolute inset-0"
-                style={{
-                  borderRadius: "50%",
-                  border: "1px dashed rgba(205, 162, 80, 0.12)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  transform: `rotate(${activeCategory * 90}deg)`,
-                  transition: "transform 1s cubic-bezier(0.16, 1, 0.3, 1)"
-                }}
-              >
-                <svg className="w-full h-full animate-spin-slow" style={{ opacity: 0.2 }} viewBox="0 0 200 200">
-                  <path
-                    id="sanskritTextPath"
-                    d="M 100 15 A 85 85 0 1 1 99.9 15"
-                    fill="none"
-                    stroke="none"
-                  />
-                  <text style={{ fontSize: "7px", fontWeight: "bold" }} fill="var(--color-sandstone)" letterSpacing="5px">
-                    <textPath href="#sanskritTextPath" startOffset="0%">
-                      विद्या परमं बलम् • सत्यमेव जयते • योगः कर्मसु कौशलम् • धर्मो रक्षति रक्षितः •
-                    </textPath>
-                  </text>
-                </svg>
+            <style>{`
+              .wing-nav-item {
+                width: 100%;
+                text-align: left;
+                position: relative;
+                padding: 1.15rem 1.4rem;
+                border-radius: 14px;
+                display: flex;
+                align-items: center;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                cursor: pointer;
+                background: rgba(23, 17, 12, 0.65);
+                border: 1px solid rgba(205, 162, 80, 0.16);
+                border-left: 3px solid transparent;
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+              }
+              .wing-nav-item:hover {
+                background: rgba(36, 26, 18, 0.8);
+                border-color: rgba(205, 162, 80, 0.35);
+                transform: translateX(4px);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+              }
+              .wing-nav-item.active {
+                background: linear-gradient(135deg, rgba(224, 90, 16, 0.14) 0%, rgba(23, 17, 12, 0.85) 100%);
+                border: 1px solid rgba(224, 90, 16, 0.5);
+                border-left: 4px solid var(--color-saffron);
+                box-shadow: 0 10px 28px -4px rgba(0, 0, 0, 0.5), 0 0 20px rgba(224, 90, 16, 0.15);
+                transform: translateX(6px);
+              }
+              :root[data-theme="light"] .wing-nav-item {
+                background: rgba(255, 255, 255, 0.7);
+                border: 1px solid rgba(155, 123, 60, 0.2);
+                border-left: 3px solid transparent;
+                box-shadow: 0 4px 15px rgba(155, 123, 60, 0.05);
+              }
+              :root[data-theme="light"] .wing-nav-item:hover {
+                background: rgba(255, 255, 255, 0.95);
+                border-color: rgba(155, 123, 60, 0.4);
+                transform: translateX(4px);
+                box-shadow: 0 8px 20px rgba(155, 123, 60, 0.1);
+              }
+              :root[data-theme="light"] .wing-nav-item.active {
+                background: linear-gradient(135deg, rgba(192, 90, 24, 0.08) 0%, rgba(255, 255, 255, 0.95) 100%);
+                border: 1px solid rgba(192, 90, 24, 0.45);
+                border-left: 4px solid var(--color-saffron);
+                box-shadow: 0 10px 28px -4px rgba(155, 123, 60, 0.12), 0 0 20px rgba(192, 90, 24, 0.08);
+                transform: translateX(6px);
+              }
+            `}</style>
+
+            <div className="flex flex-col gap-3.5 max-w-md mx-auto lg:mx-0">
+              <div className="mb-2 px-1">
+                <span
+                  className="text-xs font-bold uppercase tracking-widest text-cinzel"
+                  style={{ color: "var(--color-sandstone)", letterSpacing: "0.18em" }}
+                >
+                  Select Engineering Wing
+                </span>
               </div>
 
-              {/* Lotus Mandala Core */}
-              <div
-                className="relative"
-                style={{
-                  width: "85%",
-                  height: "85%",
-                  borderRadius: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  transform: `rotate(${activeCategory * -90}deg)`,
-                  transition: "transform 1s cubic-bezier(0.16, 1, 0.3, 1)"
-                }}
-              >
-                {/* Central Bindu (Fixed, Non-Rotating inside rotating container offset) */}
-                <div
-                  className="absolute flex items-center justify-center animate-glow-breathe"
-                  style={{
-                    width: "3.5rem",
-                    height: "3.5rem",
-                    borderRadius: "50%",
-                    background: "var(--mandala-bindu-bg)",
-                    border: "2px solid var(--color-sandstone)",
-                    zIndex: 20,
-                    transform: `rotate(${activeCategory * 90}deg)`,
-                    transition: "transform 1s cubic-bezier(0.16, 1, 0.3, 1)"
-                  }}
-                >
-                  <Sparkles className="w-5 h-5 animate-pulse-gentle" style={{ color: "var(--color-gold-glow)" }} />
-                </div>
-
-                {/* 4 Rotating Petals */}
-                {categories.map((cat, idx) => {
-                  const rotationAngle = idx * 90;
-                  const isActive = activeCategory === idx;
-                  return (
-                    <div
-                      key={idx}
-                      className="absolute inset-0"
-                      style={{
-                        transformOrigin: "center",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        transform: `rotate(${rotationAngle}deg)`,
-                        transition: "all 0.7s ease",
-                        pointerEvents: "none"
-                      }}
-                    >
-                      <div
-                        onClick={() => setActiveCategory(idx)}
-                        className="absolute flex flex-col items-center justify-center p-4 text-center cursor-pointer"
+              {categories.map((cat, idx) => {
+                const isActive = activeCategory === idx;
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveCategory(idx)}
+                    className={`wing-nav-item focus:outline-none ${isActive ? "active" : ""}`}
+                  >
+                    <div className="flex items-center gap-4 w-full">
+                      <span
+                        className="font-mono text-sm sm:text-base font-bold tracking-wider transition-colors duration-200"
                         style={{
-                          width: "130px",
-                          height: "175px",
-                          top: "-25px",
-                          transition: "all 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
-                          transform: isActive ? "scale(1.08)" : "scale(0.92)",
-                          opacity: isActive ? 1 : 0.4,
-                          clipPath: "polygon(50% 0%, 100% 35%, 100% 85%, 50% 100%, 0% 85%, 0% 35%)",
-                          background: isActive
-                            ? "var(--petal-active-bg)"
-                            : "var(--petal-inactive-bg)",
-                          border: "1px solid var(--color-sandstone)",
-                          boxShadow: isActive ? "0 0 30px rgba(224, 90, 16, 0.4)" : "none",
-                          pointerEvents: "auto"
+                          color: isActive ? "var(--color-saffron)" : "var(--color-sandstone)",
+                          minWidth: "2rem"
                         }}
                       >
-                        <div
-                          className="flex flex-col items-center justify-center"
-                          style={{
-                            transform: `rotate(${-rotationAngle + activeCategory * 90}deg)`,
-                            transition: "all 0.7s ease"
-                          }}
-                        >
-                          <div
-                            className="mb-2 p-2"
-                            style={{ borderRadius: "50%", background: "var(--petal-icon-bg)", display: "flex" }}
-                          >
-                            {cat.icon}
-                          </div>
-                          <span className="text-cinzel text-xs font-bold" style={{ color: "var(--color-text-primary)" }}>
-                            {cat.title.split(" ")[0]}
-                          </span>
-                          <span
-                            className="font-mono text-xs uppercase mt-1 block"
-                            style={{ opacity: 0.6, letterSpacing: "0.15em", fontSize: "9px" }}
-                          >
-                            {idx + 1}
-                          </span>
-                        </div>
-                      </div>
+                        0{idx + 1}
+                      </span>
+                      <h4
+                        className="text-cinzel text-sm sm:text-base md:text-lg font-bold tracking-wide transition-colors duration-200"
+                        style={{
+                          color: isActive ? "var(--color-text-primary)" : "var(--color-text-secondary)"
+                        }}
+                      >
+                        {cat.title}
+                      </h4>
                     </div>
-                  );
-                })}
-              </div>
+                  </button>
+                );
+              })}
             </div>
           </ScrollReveal>
 
@@ -425,12 +389,12 @@ export default function LotusMandala() {
                   const angle = (index * 2 * Math.PI) / 6;
                   const cos = Math.cos(angle).toFixed(4);
                   const sin = Math.sin(angle).toFixed(4);
-                  
+
                   const circularPosition = {
                     left: `calc(50% - var(--orb-half) + (${cos} * var(--radius)))`,
                     top: `calc(50% - var(--orb-half) + (${sin} * var(--radius)))`
                   };
-                  
+
                   return (
                     <div
                       key={`${activeCategory}-${index}`}
