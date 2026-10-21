@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Sparkles, Terminal, Palette, Database, Cpu, Shield, Server, Laptop, Box, GitBranch, Brain } from "lucide-react";
+import { Sparkles, Terminal, Palette, Database, Cpu, Shield, Server, Laptop, Box, GitBranch, Brain, RotateCw, RotateCcw } from "lucide-react";
 import { ScrollReveal } from "../hooks/useScrollReveal";
 
 export default function LotusMandala() {
   const [activeCategory, setActiveCategory] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [rotation, setRotation] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
   const sectionRef = useRef(null);
+  const floatingAreaRef = useRef(null);
+  const isDraggingRef = useRef(false);
+  const startAngleRef = useRef(0);
+  const startRotationRef = useRef(0);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -17,6 +23,51 @@ export default function LotusMandala() {
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
+
+  const getAngle = (clientX, clientY) => {
+    if (!floatingAreaRef.current) return 0;
+    const rect = floatingAreaRef.current.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    return Math.atan2(clientY - cy, clientX - cx);
+  };
+
+  const handlePointerDown = (e) => {
+    if (e.button !== undefined && e.button !== 0) return;
+    isDraggingRef.current = true;
+    setIsDragging(true);
+    const angle = getAngle(e.clientX, e.clientY);
+    startAngleRef.current = angle;
+    startRotationRef.current = rotation;
+    if (floatingAreaRef.current) {
+      try {
+        floatingAreaRef.current.setPointerCapture(e.pointerId);
+      } catch (err) {
+        // ignore
+      }
+    }
+  };
+
+  const handlePointerMove = (e) => {
+    if (!isDraggingRef.current) return;
+    const currentAngle = getAngle(e.clientX, e.clientY);
+    const delta = currentAngle - startAngleRef.current;
+    setRotation(startRotationRef.current + delta);
+  };
+
+  const handlePointerUp = (e) => {
+    if (isDraggingRef.current) {
+      isDraggingRef.current = false;
+      setIsDragging(false);
+      try {
+        if (floatingAreaRef.current && floatingAreaRef.current.hasPointerCapture(e.pointerId)) {
+          floatingAreaRef.current.releasePointerCapture(e.pointerId);
+        }
+      } catch (err) {
+        // ignore
+      }
+    }
+  };
 
   const categories = [
     {
@@ -189,7 +240,10 @@ export default function LotusMandala() {
                 return (
                   <button
                     key={idx}
-                    onClick={() => setActiveCategory(idx)}
+                    onClick={() => {
+                      setActiveCategory(idx);
+                      setRotation(0);
+                    }}
                     className={`wing-nav-item focus:outline-none ${isActive ? "active" : ""}`}
                   >
                     <div className="flex items-center gap-4 w-full">
@@ -217,7 +271,7 @@ export default function LotusMandala() {
             </div>
           </ScrollReveal>
 
-          {/* Right Column: Skill details Card with floating only circular skills mandala */}
+          {/* Right Column: Skill details Card with floating rotatable circular skills mandala */}
           <ScrollReveal animation="reveal-slide-right" className="lg:col-span-6">
             <div
               className="glass-panel relative gold-glow-border gradient-border"
@@ -225,7 +279,7 @@ export default function LotusMandala() {
                 borderTop: "4px solid var(--color-sandstone)",
                 borderBottom: "4px solid var(--color-sandstone)",
                 overflow: "hidden",
-                padding: "2.5rem 2rem"
+                padding: "1.75rem 1.5rem"
               }}
             >
               {/* Copper rivets */}
@@ -248,24 +302,32 @@ export default function LotusMandala() {
               {/* Embedded styles for internal keyframes & circular arrangement */}
               <style>{`
                 .floating-area {
-                  min-height: 420px;
+                  min-height: 310px;
                   position: relative;
                   display: flex;
                   flex-wrap: wrap;
                   justify-content: center;
-                  align-items: flex-start;
-                  background: radial-gradient(ellipse at 50% 50%, rgba(205, 162, 80, 0.04) 0%, transparent 70%);
+                  align-items: center;
+                  background: radial-gradient(ellipse at 50% 50%, rgba(205, 162, 80, 0.05) 0%, transparent 70%);
                   border-radius: 20px;
                   width: 100%;
                   overflow: visible;
                   transition: all 0.3s;
-                  margin-top: 1.5rem;
+                  margin-top: 0.25rem;
+                  touch-action: none;
+                  user-select: none;
+                  -webkit-user-select: none;
+                  cursor: grab;
                   
-                  --radius: 120px;
-                  --orb-size: 88px;
-                  --orb-half: 44px;
-                  --bindu-size: 2.75rem;
-                  --bindu-half: 1.375rem;
+                  --radius: 102px;
+                  --orb-size: 76px;
+                  --orb-half: 38px;
+                  --bindu-size: 2.35rem;
+                  --bindu-half: 1.175rem;
+                }
+
+                .floating-area.is-dragging {
+                  cursor: grabbing;
                 }
 
                 .skill-orb {
@@ -282,22 +344,28 @@ export default function LotusMandala() {
                   justify-content: center;
                   text-align: center;
                   border: 1.5px solid var(--color-sandstone);
-                  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 215, 0, 0.15);
-                  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-                  cursor: default;
+                  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 215, 0, 0.15);
+                  cursor: grab;
                   animation: floatGentle 3.5s ease-in-out infinite;
-                  will-change: transform;
+                  will-change: left, top, transform;
+                  user-select: none;
+                  -webkit-user-select: none;
+                }
+
+                .floating-area.is-dragging .skill-orb {
+                  cursor: grabbing;
                 }
 
                 .skill-orb:hover {
-                  transform: scale(1.1) translateY(-5px) !important;
+                  transform: scale(1.1) translateY(-4px) !important;
                   border-color: var(--color-saffron);
                   box-shadow: 0 12px 28px rgba(224, 90, 16, 0.35), inset 0 1px 0 rgba(255, 215, 0, 0.3);
+                  z-index: 20;
                 }
 
                 :root[data-theme="light"] .skill-orb {
                   background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.95), rgba(248, 243, 232, 0.98));
-                  box-shadow: 0 8px 20px rgba(155, 123, 60, 0.1);
+                  box-shadow: 0 8px 18px rgba(155, 123, 60, 0.1);
                 }
 
                 :root[data-theme="light"] .skill-orb:hover {
@@ -307,68 +375,115 @@ export default function LotusMandala() {
 
                 .skill-orb h4 {
                   font-family: var(--font-display);
-                  font-size: 0.52rem;
+                  font-size: 0.48rem;
                   color: var(--color-text-primary);
-                  padding: 0 6px;
-                  line-height: 1.25;
+                  padding: 0 4px;
+                  line-height: 1.2;
                   font-weight: 700;
+                  pointer-events: none;
+                  user-select: none;
+                }
+
+                .skill-orb svg {
+                  pointer-events: none;
                 }
 
                 @keyframes floatGentle {
                   0% { transform: translateY(0px); }
-                  50% { transform: translateY(-10px); }
+                  50% { transform: translateY(-5px); }
                   100% { transform: translateY(0px); }
                 }
 
                 @media (max-width: 768px) {
                   .floating-area {
-                    --radius: 92px;
-                    --orb-size: 72px;
-                    --orb-half: 36px;
-                    --bindu-size: 2.25rem;
-                    --bindu-half: 1.125rem;
-                    min-height: 340px;
+                    --radius: 80px;
+                    --orb-size: 64px;
+                    --orb-half: 32px;
+                    --bindu-size: 2rem;
+                    --bindu-half: 1rem;
+                    min-height: 260px;
                   }
                   .skill-orb h4 {
-                    font-size: 0.44rem;
+                    font-size: 0.42rem;
                     padding: 0 2px;
                   }
                 }
               `}</style>
 
-              {/* Title & Header inside details box */}
-              <div className="flex items-center gap-3 mb-6">
+              {/* Title & Header inside details box - compact & balanced */}
+              <div className="flex items-center gap-3 mb-3">
                 <span
-                  className="p-3"
+                  className="p-2.5"
                   style={{ backgroundColor: "rgba(205,162,80,0.08)", borderRadius: "10px", display: "flex" }}
                 >
                   {categories[activeCategory].icon}
                 </span>
                 <div>
                   <span
-                    className="text-xs font-bold uppercase text-cinzel block mb-1"
+                    className="text-xs font-bold uppercase text-cinzel block mb-0.5"
                     style={{ color: "var(--color-saffron)", letterSpacing: "0.1em" }}
                   >
                     {categories[activeCategory].sanskrit}
                   </span>
-                  <h3 className="text-cinzel text-xl md:text-2xl font-bold">
+                  <h3 className="text-cinzel text-lg md:text-xl font-bold">
                     {categories[activeCategory].title}
                   </h3>
                 </div>
               </div>
 
               <p
-                className="text-marcellus text-sm md:text-base mb-6"
-                style={{ color: "var(--color-text-secondary)", lineHeight: "1.7" }}
+                className="text-marcellus text-xs md:text-sm mb-2.5"
+                style={{ color: "var(--color-text-secondary)", lineHeight: "1.55" }}
               >
                 {categories[activeCategory].description}
               </p>
 
-              {/* Dynamic Circular Floating Area Inside Card (6 Skills arranged in a beautiful mandala) */}
-              <div className="floating-area">
+              {/* Dynamic Rotatable Circular Floating Area (Interactive Mandala) */}
+              <div
+                ref={floatingAreaRef}
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerUp={handlePointerUp}
+                onPointerCancel={handlePointerUp}
+                className={`floating-area ${isDragging ? "is-dragging" : ""}`}
+                title="Click and drag around the center to rotate skills circle"
+              >
+                {/* Concentric Golden Orbit Guide Rings */}
+                <svg
+                  className="absolute pointer-events-none"
+                  style={{
+                    width: "calc(var(--radius) * 2)",
+                    height: "calc(var(--radius) * 2)",
+                    left: "calc(50% - var(--radius))",
+                    top: "calc(50% - var(--radius))",
+                    opacity: 0.22
+                  }}
+                  viewBox="0 0 240 240"
+                >
+                  <circle
+                    cx="120"
+                    cy="120"
+                    r="118"
+                    fill="none"
+                    stroke="var(--color-sandstone)"
+                    strokeWidth="1.5"
+                    strokeDasharray="4 6"
+                  />
+                  <circle
+                    cx="120"
+                    cy="120"
+                    r="58"
+                    fill="none"
+                    stroke="var(--color-saffron)"
+                    strokeWidth="1"
+                    strokeDasharray="2 4"
+                    opacity="0.5"
+                  />
+                </svg>
+
                 {/* Centered Core in the middle of the skills circle */}
                 <div
-                  className="absolute flex items-center justify-center animate-glow-breathe"
+                  className="absolute flex items-center justify-center animate-glow-breathe pointer-events-none"
                   style={{
                     width: "var(--bindu-size)",
                     height: "var(--bindu-size)",
@@ -383,10 +498,9 @@ export default function LotusMandala() {
                   <Sparkles className="w-4 h-4 animate-pulse-gentle" style={{ color: "var(--color-gold-glow)" }} />
                 </div>
 
-                {/* Staggered Circular Skills Orbs */}
+                {/* Rotatable Circular Skills Orbs */}
                 {categories[activeCategory].skills.map((skill, index) => {
-                  // Symmetrical angular coordinates for exactly 6 skills
-                  const angle = (index * 2 * Math.PI) / 6;
+                  const angle = (index * 2 * Math.PI) / 6 + rotation;
                   const cos = Math.cos(angle).toFixed(4);
                   const sin = Math.sin(angle).toFixed(4);
 
@@ -401,6 +515,9 @@ export default function LotusMandala() {
                       className="skill-orb"
                       style={{
                         ...circularPosition,
+                        transition: isDragging
+                          ? "none"
+                          : "left 0.4s cubic-bezier(0.16, 1, 0.3, 1), top 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
                         animationDelay: `${index * 0.25}s`
                       }}
                     >
@@ -409,6 +526,72 @@ export default function LotusMandala() {
                     </div>
                   );
                 })}
+              </div>
+
+              {/* Rotation Toolbar: Touch/Drag Hint + Rotate Buttons */}
+              <div className="flex items-center justify-between mt-2.5 px-1">
+                <div
+                  className="flex items-center gap-1.5"
+                  style={{ color: "var(--color-sandstone)", opacity: 0.8 }}
+                >
+                  <RotateCw
+                    className={`w-3 h-3 ${isDragging ? "animate-spin" : ""}`}
+                    style={{ color: "var(--color-saffron)" }}
+                  />
+                  <span className="font-mono text-[10px] md:text-xs tracking-wider uppercase">
+                    {isDragging ? "Rotating Mandala..." : "Drag circle or use buttons to rotate"}
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => setRotation((prev) => prev - Math.PI / 3)}
+                    title="Rotate Counter-Clockwise (60°)"
+                    className="p-1.5 rounded-lg transition-all duration-200 cursor-pointer flex items-center justify-center"
+                    style={{
+                      background: "rgba(205, 162, 80, 0.08)",
+                      border: "1px solid rgba(205, 162, 80, 0.2)",
+                      color: "var(--color-sandstone)"
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "rgba(224, 90, 16, 0.2)";
+                      e.currentTarget.style.borderColor = "var(--color-saffron)";
+                      e.currentTarget.style.color = "var(--color-saffron)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "rgba(205, 162, 80, 0.08)";
+                      e.currentTarget.style.borderColor = "rgba(205, 162, 80, 0.2)";
+                      e.currentTarget.style.color = "var(--color-sandstone)";
+                    }}
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setRotation((prev) => prev + Math.PI / 3)}
+                    title="Rotate Clockwise (60°)"
+                    className="p-1.5 rounded-lg transition-all duration-200 cursor-pointer flex items-center justify-center"
+                    style={{
+                      background: "rgba(205, 162, 80, 0.08)",
+                      border: "1px solid rgba(205, 162, 80, 0.2)",
+                      color: "var(--color-sandstone)"
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "rgba(224, 90, 16, 0.2)";
+                      e.currentTarget.style.borderColor = "var(--color-saffron)";
+                      e.currentTarget.style.color = "var(--color-saffron)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "rgba(205, 162, 80, 0.08)";
+                      e.currentTarget.style.borderColor = "rgba(205, 162, 80, 0.2)";
+                      e.currentTarget.style.color = "var(--color-sandstone)";
+                    }}
+                  >
+                    <RotateCw className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
             </div>
           </ScrollReveal>

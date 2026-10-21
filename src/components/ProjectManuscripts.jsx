@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { ExternalLink, BookOpen, Shield, BookMarked, Brain, Globe, Lock, Zap, Home, ChefHat } from "lucide-react";
+import { ExternalLink, BookOpen, Shield, BookMarked, Brain, Globe, Lock, Zap, Home, ChefHat, Library } from "lucide-react";
 import { GithubIcon } from "./SocialIcons";
 import { ScrollReveal } from "../hooks/useScrollReveal";
+
+const ROMAN_NUMERALS = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+const toRoman = (num) => ROMAN_NUMERALS[num - 1] || String(num);
 
 export default function ProjectManuscripts() {
   const [activeProject, setActiveProject] = useState(null);
@@ -35,6 +38,19 @@ export default function ProjectManuscripts() {
     },
     {
       id: 3,
+      title: "LitHaven",
+      category: "Full-Stack MERN Platform",
+      description: "A college book exchange and study notes sharing platform for students to buy & sell pre-owned textbooks and share academic resources with zero commission fees.",
+      specs: "MERN architecture with React 19 + Vite frontend and Node.js + Express backend. Features interactive 3D bookshelf spine viewer, real-time book listing with live 3D card preview, intelligent savings calculator, dual-mode theme engine (Midnight & Travertine Atelier), campus direct messaging for negotiation, and a Study Vault with counter-tracked downloads for lecture notes, cheat sheets, and question papers. Deployed on Vercel and Render.",
+      tech: ["React 19", "Node.js", "Express.js", "MongoDB", "Vite", "JWT", "TailwindCSS"],
+      links: { live: "https://lit-haven.vercel.app", github: "https://github.com/harsh-raj00/LitHaven" },
+      sanskrit: "साहित्य निलय (LitHaven)",
+      icon: <Library className="w-5 h-5" style={{ color: "var(--color-saffron)" }} />,
+      gradient: "var(--proj-gradient-7)",
+      accentColor: "#a855f7"
+    },
+    {
+      id: 4,
       title: "LivspaceOne",
       category: "E-Commerce / Architecture",
       description: "India's premier digital storefront for sophisticated space creation — connecting luxury homeowners with elite certified contractors, architects, and design experts.",
@@ -47,7 +63,7 @@ export default function ProjectManuscripts() {
       accentColor: "#4a9e6e"
     },
     {
-      id: 4,
+      id: 5,
       title: "J.A.R.V.I.S.",
       category: "AI / Full-Stack",
       description: "An AI-powered personal assistant with a cinematic Iron Man holographic interface. Features real-time 3D holographic sphere with 8,000 particles, voice control, and smart home integration.",
@@ -60,7 +76,7 @@ export default function ProjectManuscripts() {
       accentColor: "#4da6ff",
     },
     {
-      id: 5,
+      id: 6,
       title: "EthSecure Health",
       category: "Blockchain / Web3",
       description: "A patient-centric Ethereum blockchain system for secure electronic health records using IPFS decentralized storage, client-side AES-256 encryption, and role-based smart contracts.",
@@ -73,7 +89,7 @@ export default function ProjectManuscripts() {
       accentColor: "#b87333"
     },
     {
-      id: 6,
+      id: 7,
       title: "DeepfakeGuard",
       category: "AI / Computer Vision",
       description: "Multi-layered biometric authentication combining real-time face detection, recognition, liveness verification, and AI-powered deepfake detection to protect identity against spoofing attacks.",
@@ -135,6 +151,7 @@ export default function ProjectManuscripts() {
               key={proj.id}
               proj={proj}
               index={index}
+              totalProjects={projects.length}
               isOpen={activeProject === proj.id}
               onToggle={() => setActiveProject(activeProject === proj.id ? null : proj.id)}
               onMouseMove={handleMouseMove}
@@ -146,7 +163,7 @@ export default function ProjectManuscripts() {
   );
 }
 
-function ProjectCard({ proj, index, isOpen, onToggle, onMouseMove }) {
+function ProjectCard({ proj, index, totalProjects, isOpen, onToggle, onMouseMove }) {
   return (
     <ScrollReveal delay={index * 150} animation="reveal-fade-up">
       <div
@@ -254,7 +271,7 @@ function ProjectCard({ proj, index, isOpen, onToggle, onMouseMove }) {
               style={{ borderTop: "1px solid rgba(205,162,80,0.12)", paddingTop: "1rem" }}
             >
               <span className="font-mono text-xs" style={{ color: "var(--color-text-secondary)", opacity: 0.5 }}>
-                LEAF #{proj.id} OF VI
+                LEAF #{proj.id} OF {toRoman(totalProjects)}
               </span>
               <span
                 className="text-xs font-bold text-cinzel flex items-center gap-2"
